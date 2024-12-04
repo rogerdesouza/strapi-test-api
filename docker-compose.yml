@@ -1,0 +1,36 @@
+version: "3.8"
+
+services:
+  postgres:
+    image: postgres:15
+    container_name: postgres
+    environment:
+      POSTGRES_USER: strapi
+      POSTGRES_PASSWORD: strapi_password
+      POSTGRES_DB: strapi_db
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  strapi:
+    image: strapi/strapi:latest
+    container_name: strapi
+    depends_on:
+      - postgres
+    environment:
+      DATABASE_CLIENT: postgres
+      DATABASE_HOST: postgres
+      DATABASE_PORT: 5432
+      DATABASE_NAME: strapi_db
+      DATABASE_USERNAME: strapi
+      DATABASE_PASSWORD: strapi_password
+      NODE_ENV: development
+    ports:
+      - "1337:1337"
+    volumes:
+      - strapi_app:/srv/app
+
+volumes:
+  postgres_data:
+  strapi_app:
