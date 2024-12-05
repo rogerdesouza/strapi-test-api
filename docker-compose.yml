@@ -13,6 +13,6 @@ services:
       - postgres_strapi_blog:/var/lib/postgresql/data
     ports:
       - "5432:5432"
-
+      
 volumes:
   postgres_strapi_blog:
